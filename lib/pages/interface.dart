@@ -2013,19 +2013,18 @@ class _InterfacePageState extends State<InterfacePage> {
                       mainAxisSize: pw.MainAxisSize.min,
                       children: [
                         pw.Container(
-                          width: 100, // Adjusted width
+                          width: 60, // Adjusted width
                           child: pw.Text(
-                            '   Rs. ${_totalAmount.toStringAsFixed(0)}',
+                            'Rs. ${_totalAmount.toStringAsFixed(0)}',
                             style: pw.TextStyle(
                               fontSize: 10, // Smaller font size
                               fontWeight: pw.FontWeight.bold,
                             ),
-                            textAlign: pw.TextAlign.left,
                           ),
                         ),
 
                         pw.Container(
-                          width: 60, // Adjusted width
+                          width: 80, // Adjusted width
                           child: pw.Text(
                             'TOTAL:',
                             style: pw.TextStyle(
