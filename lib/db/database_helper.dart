@@ -83,16 +83,16 @@ class DatabaseHelper {
       '''
     SELECT 
       menu.product_id, 
-      menu.product_name, 
+      COALESCE(menu.product_name, ' ') AS product_name, 
       COALESCE(menu.price, 0) AS price, 
       menu.category_id,
       categories.category_name,
-      menu.image_path
+      COALESCE(menu.image_path, ' ') AS image_path
     FROM menu
     INNER JOIN categories ON menu.category_id = categories.category_id
     WHERE menu.category_id = ?
     ORDER BY menu.product_id
-  ''',
+    ''',
       [categoryId],
     );
   }
@@ -101,7 +101,7 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> fetchMenuItems() async {
     final db = await database;
     return await db.rawQuery('''
-      SELECT menu.product_id, menu.product_name, COALESCE(menu.price, 0) AS price, categories.category_name, menu.image_path 
+      SELECT menu.product_id, COALESCE(menu.product_name, ' ') AS product_name, COALESCE(menu.price, 0) AS price, categories.category_name, COALESCE(menu.image_path, ' ') AS image_path
       FROM menu
       INNER JOIN categories ON menu.category_id = categories.category_id
       ORDER BY categories.category_id, menu.product_id

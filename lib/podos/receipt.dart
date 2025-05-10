@@ -40,6 +40,8 @@ class ReceiptProvider with ChangeNotifier {
   List<ReceiptItem> get receiptItems => List.unmodifiable(_receiptItems);
 
   void addItem(ReceiptItem item) {
+    if (item.itemName.trim().isEmpty) return; // Do nothing if name is empty
+
     final existingItemIndex = _receiptItems.indexWhere(
       (receiptItem) => receiptItem.itemName == item.itemName,
     );
@@ -51,6 +53,7 @@ class ReceiptProvider with ChangeNotifier {
       // Item does not exist, add new item
       _receiptItems.insert(0, item);
     }
+
     notifyListeners();
   }
 

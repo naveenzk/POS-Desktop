@@ -810,57 +810,79 @@ class _InterfacePageState extends State<InterfacePage> {
                                                       ),
                                             ),
                                           ),
-                                          Center(
-                                            // CENTER COLUMN FOR NAME AND PRICE
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 2,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: Color(
-                                                  0xFF4c2b08,
-                                                ).withOpacity(0.4),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    menuItemProvider
-                                                        .menuItems[index]
-                                                        .product_name,
-                                                    style:
-                                                        GoogleFonts.notoNastaliqUrdu(
-                                                          fontSize:
-                                                              screenWidth *
-                                                              0.0104,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.white,
+                                          menuItemProvider
+                                                  .menuItems[index]
+                                                  .product_name
+                                                  .trim()
+                                                  .isNotEmpty
+                                              ? Center(
+                                                // CENTER COLUMN FOR NAME AND PRICE
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 2,
+                                                      ),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(
+                                                      0xFF4c2b08,
+                                                    ).withOpacity(0.4),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          8,
                                                         ),
-                                                    textAlign: TextAlign.center,
                                                   ),
-                                                  const SizedBox(height: 10),
-                                                  Text(
-                                                    "RS. ${menuItemProvider.menuItems[index].price}", // SEE MENUITEM.DART PODO
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize:
-                                                          screenWidth * 0.0084,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.white70,
-                                                    ),
-                                                    textAlign: TextAlign.center,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        menuItemProvider
+                                                            .menuItems[index]
+                                                            .product_name,
+                                                        style:
+                                                            GoogleFonts.notoNastaliqUrdu(
+                                                              fontSize:
+                                                                  screenWidth *
+                                                                  0.0104,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+
+                                                      Text(
+                                                        "RS. ${menuItemProvider.menuItems[index].price}", // SEE MENUITEM.DART PODO
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                              fontSize:
+                                                                  screenWidth *
+                                                                  0.0084,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  Colors
+                                                                      .white70,
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                                ),
+                                              )
+                                              : const SizedBox.shrink(), // renders nothing if name is empty
                                         ],
                                       ),
                                     ),
@@ -1793,7 +1815,7 @@ class _InterfacePageState extends State<InterfacePage> {
     pdf.addPage(
       pw.Page(
         pageFormat: const PdfPageFormat(
-          80 * PdfPageFormat.mm,
+          70 * PdfPageFormat.mm,
           200 * PdfPageFormat.mm,
         ).applyMargin(left: 2, right: 2, top: 2, bottom: 2),
         textDirection: pw.TextDirection.rtl, //@NEW
@@ -1841,8 +1863,8 @@ class _InterfacePageState extends State<InterfacePage> {
                     inside: const pw.BorderSide(width: 0.5),
                   ),
                   columnWidths: {
-                    // 0: const pw.FixedColumnWidth(25), // Smaller column width
-                    0: const pw.FlexColumnWidth(4),
+                    // 0: const pw.FlexColumnWidth(80),// Smaller column width
+                    0: const pw.FlexColumnWidth(3.5),
                     1: const pw.FlexColumnWidth(1),
                     2: const pw.FlexColumnWidth(1),
                     3: const pw.FlexColumnWidth(1.5), // Adjusted column width
@@ -1991,18 +2013,19 @@ class _InterfacePageState extends State<InterfacePage> {
                       mainAxisSize: pw.MainAxisSize.min,
                       children: [
                         pw.Container(
-                          width: 60, // Adjusted width
+                          width: 100, // Adjusted width
                           child: pw.Text(
-                            'Rs. ${_totalAmount.toStringAsFixed(0)}',
+                            '   Rs. ${_totalAmount.toStringAsFixed(0)}',
                             style: pw.TextStyle(
                               fontSize: 10, // Smaller font size
                               fontWeight: pw.FontWeight.bold,
                             ),
+                            textAlign: pw.TextAlign.left,
                           ),
                         ),
 
                         pw.Container(
-                          width: 80, // Adjusted width
+                          width: 60, // Adjusted width
                           child: pw.Text(
                             'TOTAL:',
                             style: pw.TextStyle(
@@ -2054,13 +2077,7 @@ class _InterfacePageState extends State<InterfacePage> {
                 ),
               ),
               pw.SizedBox(height: 10), // Adds spacing before cutting
-              // Page Break (forces next receipt to print separately)
-              pw.Padding(
-                padding: const pw.EdgeInsets.only(top: 10),
-                child: pw.Text(
-                  '\n\n\n',
-                ), // Adds blank space to force page break
-              ),
+              pw.SizedBox(height: 30), // Ensures bottom space for cutter
             ],
           );
         },
